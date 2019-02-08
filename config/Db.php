@@ -178,6 +178,7 @@ class Db {
 
         $res = $bdd->query($req);
 
-        return $res->fetchAll(PDO::FETCH_ASSOC);
+        $data = ($res) ? $res->fetchAll(PDO::FETCH_ASSOC) : [];
+        return $data;
     }
 }

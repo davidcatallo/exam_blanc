@@ -9,6 +9,11 @@ $routes->get('abonnes/add',             'AbonnesController@add');       // ajout
 $routes->post('abonnes/save',           'AbonnesController@save');      // faire un insert ou un update
 $routes->post('abonnes/delete/(\d+)',   'AbonnesController@delete');    // supprimer un abonné
 
-
+// routes Ouvrages
+$routes->get('ouvrages',                'OuvragesController@index');     
+$routes->get('ouvrages/(\d+)',          'OuvragesController@show');     
+$routes->get('ouvrages/add',            'OuvragesController@add');       
+$routes->post('ouvrages/save',          'OuvragesController@save');     
+$routes->post('ouvrages/delete/(\d+)',  'OuvragesController@delete');
 
 $routes->run();

@@ -44,8 +44,8 @@ class association_abonne_ouvrage extends Db {
      *
      * @return  self
      */ 
-    public function setId($id)
-    {
+    public function setId($id){
+
         $this->id = $id;
 
         return $this;
@@ -56,8 +56,8 @@ class association_abonne_ouvrage extends Db {
      *
      * @return  self
      */ 
-    public function setId_abonne($id_abonne)
-    {
+    public function setIdAbonne($id_abonne){
+
         $this->id_abonne = $id_abonne;
 
         return $this;
@@ -68,12 +68,85 @@ class association_abonne_ouvrage extends Db {
      *
      * @return  self
      */ 
-    public function setId_ouvrage($id_ouvrage)
-    {
+    public function setIdOuvrage($id_ouvrage){
+
         $this->id_ouvrage = $id_ouvrage;
 
         return $this;
     }
 
+    public function save() {
+        $data = [
+            "id_abonne"     => $this->id_abonne(),
+            "id_ouvrage"    => $this->id_ouvrage()
+        ];
+        if ($this->id > 0) return $this->update();
+        $nouvelId = Db::dbCreate(self::TABLE_NAME, $data);
+        $this->setId($nouvelId);
+        return $this;
+    }
+
+    public function update() {
+        if ($this->id > 0) {
+            $data = [
+                "id_abonne"     => $this->id_abonne(),
+                "id_ouvrage"    => $this->id_ouvrage(),
+                "id"            => $this->id()
+            ];
+
+            Db::dbUpdate(self::TABLE_NAME, $data);
+            return $this;
+        }
+        return;
+    }
+
+    public function delete() {
+        $data = [
+            'id' => $this->id(),
+        ];
+        
+        Db::dbDelete(self::TABLE_NAME, $data);
+        return;
+    }
+
+    public static function findAll($objects = true) {
+
+        $data = Db::dbFind(self::TABLE_NAME);
+        
+        if ($objects) {
+            $objectsList = [];
+            foreach ($data as $d) {
+                $objectsList[] = new association_abonne_ouvrage($d['id_abonne'], $d['id_ouvrage'], intval($d['id']));
+            }
+            return $objectsList;
+        }
+        return $data;
+    }
+
+    public static function find(array $request, $objects = true) {
+        $data = Db::dbFind(self::TABLE_NAME, $request);
+        if ($objects) {
+            $objectsList = [];
+            foreach ($data as $d) {
+                $objectsList[] = new association_abonne_ouvrage($d['id_abonne'], $d['id_ouvrage'], intval($d['id']));
+            }
+            return $objectsList;
+        }
+        return $data;
+    }
+
+    public static function findOne(int $id, $object = true) {
+        $request = [
+            ['id', '=', $id]
+        ];
+        $data = Db::dbFind(self::TABLE_NAME, $request);
+        if (count($data) > 0) $data = $data[0];
+        else return;
+        if ($object) {
+            $article = new association_abonne_ouvrage($data['id_abonne'], $data['id_ouvrage'], intval($data['id']));
+            return $article;
+        }
+        return $data;
+    }
 
 }

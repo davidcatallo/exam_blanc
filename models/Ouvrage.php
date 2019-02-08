@@ -56,8 +56,15 @@ class Ouvrage extends Db {
      *
      * @return  self
      */ 
-    public function setTitre($titre)
-    {
+    public function setTitre($titre){
+
+        if (strlen($titre) == 0) {
+            throw new Exception('Le titre ne peut pas être vide.');
+        }
+        if (strlen($titre) > 150) {
+            throw new Exception('Le titre ne peut pas être supérieur à 150 caractères.');
+        }
+
         $this->titre = $titre;
 
         return $this;
@@ -68,15 +75,22 @@ class Ouvrage extends Db {
      *
      * @return  self
      */ 
-    public function setAuteur($auteur)
-    {
+    public function setAuteur($auteur){
+
+        if (strlen($auteur) == 0) {
+            throw new Exception("L'auteur ne peut pas être vide.");
+        }
+        if (strlen($auteur) > 150) {
+            throw new Exception("L'auteur ne peut pas être supérieur à 150 caractères.");
+        }
+
         $this->auteur = $auteur;
 
         return $this;
     }
 
+    // les méthodes crud !
 
-    
     public function save() {
 
         $data = [

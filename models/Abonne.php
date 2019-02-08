@@ -58,8 +58,15 @@ class Abonne extends Db {
      *
      * @return  self
      */ 
-    public function setPrenom($prenom)
-    {
+    public function setPrenom($prenom){
+
+        if (strlen($prenom) == 0) {
+            throw new Exception('Le prenom ne peut pas être vide.');
+        }
+        if (strlen($prenom) > 150) {
+            throw new Exception('Le prenom ne peut pas être supérieur à 150 caractères.');
+        }
+
         $this->prenom = $prenom;
 
         return $this;
@@ -70,15 +77,22 @@ class Abonne extends Db {
      *
      * @return  self
      */ 
-    public function setNom($nom)
-    {
+    public function setNom($nom){
+
+        if (strlen($nom) == 0) {
+            throw new Exception('Le nom ne peut pas être vide.');
+        }
+        if (strlen($nom) > 150) {
+            throw new Exception('Le nom ne peut pas être supérieur à 150 caractères.');
+        }
+
         $this->nom = $nom;
 
         return $this;
     }
 
-    
-    
+    // les méthodes crud !
+
     public function save() {
 
         $data = [

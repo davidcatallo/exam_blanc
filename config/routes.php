@@ -16,4 +16,13 @@ $routes->get('ouvrages/add',            'OuvragesController@add');
 $routes->post('ouvrages/save',          'OuvragesController@save');     
 $routes->post('ouvrages/delete/(\d+)',  'OuvragesController@delete');
 
+
+// routes association_abonne_ouvrage 
+$routes->get('prets',                   'AssociationAbonneOuvrage@index');
+$routes->get('prets/(\d+)',             'AssociationAbonneOuvrage@show');
+$routes->get('prets/add',               'AssociationAbonneOuvrage@add');
+$routes->post('prets/save',             'AssociationAbonneOuvrage@save');
+$routes->get('prets/delete/(\d+)',      'AssociationAbonneOuvrage@delete');
+
+
 $routes->run();
